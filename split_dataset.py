@@ -19,9 +19,9 @@ def main(args):
     val_path = os.path.join(args.output, name + '-val.csv')
     test_path = os.path.join(args.output, name + '-test.csv')
     
-    d[:train_size].to_csv(train_path, index=0)
-    d[train_size:train_size+val_size].to_csv(val_path, index=0)
-    d[train_size+val_size:].to_csv(test_path, index=0)
+    d[:train_size].to_csv(train_path, index=0, header=0)
+    d[train_size:train_size+val_size].to_csv(val_path, index=0, header=0)
+    d[train_size+val_size:].to_csv(test_path, index=0, header=0)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Split dataset to train/val/test')
