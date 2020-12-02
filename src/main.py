@@ -40,8 +40,8 @@ def main(args):
     val_data = TSDataset(data_path + '-val.csv', args.windows,
                          args.horizon, train_data.scaler)
     # test_data = TSDataset(data_path + '-test.csv', args.windows, args.horizon)
-    train_loader = DataLoader(train_data, args.batch_size)
-    val_loader = DataLoader(val_data, args.batch_size)
+    train_loader = DataLoader(train_data, args.batch_size, shuffle=True)
+    val_loader = DataLoader(val_data, args.batch_size, shuffle=True)
 
     
     D = train_data[0][0].shape[-1]

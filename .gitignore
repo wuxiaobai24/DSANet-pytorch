@@ -133,3 +133,6 @@ raw-data/
 
 # vscode
 .vscode
+
+# torch
+*.pt
