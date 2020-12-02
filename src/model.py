@@ -46,8 +46,6 @@ class MultiheadAttention(nn.Module):
         shape:
             query,key,value: T x batch_size x n_feature
         """
-        print(x.size())
-        print(self.n_feature)
         querys = self.qfc(x).chunk(3, -1)
         keys = self.kfc(x).chunk(3, -1)
         values = self.vfc(x).chunk(3, -1)
@@ -88,6 +86,7 @@ class SelfAttention(nn.Module):
     def __init__(self, D, n_feature, n_head, n_hidden, dropout = 0.1):
         super(SelfAttention, self).__init__()
         shape = (D, n_feature)
+        
         self.attn = ResLayerNorm(MultiheadAttention(n_feature, n_head, dropout), shape)
         self.ff = ResLayerNorm(PositionWiseFeedForward(n_feature, n_hidden), shape)
 
@@ -124,6 +123,7 @@ class DSANet(nn.Module):
         self.global_temporal_conv = nn.Conv2d(1, n_global, (T, 1))
         self.local_tempooral_conv = nn.Conv2d(1, n_local, (L, 1))
         self.pool = nn.MaxPool2d((T-L+1, 1))
+        
         self.local_stack = nn.Sequential(OrderedDict(
             [('l_attn_%d' % i, SelfAttention(D, n_local, n_local_head, n_local_hidden, dropout)) for i in range(n_local_attn)]
         ))
